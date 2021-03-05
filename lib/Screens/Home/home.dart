@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
           actions: [
             FlatButton.icon(
               icon: Icon(Icons.logout, color: Colors.white),
-              // label: Text('Logout', style: TextStyle(color: Colors.white),),
+              label: Text('Logout', style: TextStyle(color: Colors.white),),
               onPressed: () async {
                 await _auth.signOut();
               },
