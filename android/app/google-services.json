@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "291535826152",
+    "project_id": "sky-miles",
+    "storage_bucket": "sky-miles.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291535826152:android:391c166ba7100e3a51ed5d",
+        "android_client_info": {
+          "package_name": "com.adishwar.skymiles"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291535826152-sjus2n5058esfju8qj59jfv78b63685t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUHbq_MIpgqcgt1Pgox0dtvBemCyPXLG4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291535826152-sjus2n5058esfju8qj59jfv78b63685t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
