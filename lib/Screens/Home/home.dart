@@ -9,7 +9,6 @@ import '../../Models/reward.dart';
 import 'addRewardForm.dart';
 
 class Home extends StatefulWidget {
-
   @override
   _HomeState createState() => _HomeState();
 }
@@ -78,3 +77,26 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
+// To make it look like 0:19, try this:
+
+
+// bottomNavigationBar: BottomAppBar(
+//         notchMargin: 5,
+//         shape: CircularNotchedRectangle(),
+//         color: Colors.white,
+//         child: BottomNavigationBar(
+//           elevation: 0,
+//           backgroundColor: Colors.transparent,
+//           items: [
+//             BottomNavigationBarItem(
+//               icon: Icon(Icons.cloud),
+//               title: Text("Logs"),
+//             ),
+//             BottomNavigationBarItem(
+//               icon: Icon(Icons.book),
+//               title: Text("Education"),
+//             ),
+//           ],
+//         ),
+//       ),

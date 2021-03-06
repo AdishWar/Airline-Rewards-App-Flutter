@@ -14,7 +14,7 @@ class _RewardsListState extends State<RewardsList> {
   @override
   Widget build(BuildContext context) {
 
-    final userRewards = Provider.of<List<Reward>>(context);
+    final userRewards = Provider.of<List<Reward>>(context) ?? [];
 
     // userRewards.forEach((reward) {
     //   print(reward.pnr);

@@ -9,14 +9,6 @@ class DatabaseService {
   // collection reference
   final CollectionReference userdata = FirebaseFirestore.instance.collection('userdata');
 
-  // REMOVE
-  Future updateUserData(List<String> pnr, List<int> rewardPoints) async {
-    return await userdata.doc(uid).set({
-      'pnrs': pnr,
-      'rewards': rewardPoints,
-    });
-  }
-
   Future addNewReward(String pnr, int rewardPoints) async {
     return await userdata.doc(uid).collection('rewards').add({
       'rewardPoints': rewardPoints,
@@ -35,8 +27,13 @@ class DatabaseService {
   }
 
   Stream<List<Reward>> get userRewardsStream {
-    // return userdata.doc(uid).collection('rewards').snapshots();
-    return userdata.doc(uid).collection('rewards').snapshots().map(_rewardListFromSnapshot);
+    return  userdata.doc(uid).collection('rewards').snapshots().map(_rewardListFromSnapshot);
+  }
+
+  // add up all reward points and return int
+  Future getTotalRewardPoints() async {
+    // List<Reward> = userRewardsStream;
+
   }
 
 }
