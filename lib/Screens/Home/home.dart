@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sky_miles/Models/redeem.dart';
 import 'package:sky_miles/Services/auth.dart';
 import 'package:sky_miles/Services/database.dart';
 import 'rewards_list.dart';
 import 'package:sky_miles/Models/MyUser.dart';
 import '../../Models/reward.dart';
 import 'addRewardForm.dart';
+import 'redeems_list.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -16,10 +18,11 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
 
-  // @override
-  // void initState() {
-  //   // DatabaseService.getUdata();
-  // }
+  int _currentIndex = 0;
+  final tabs = [
+    RewardsList(),
+    RedeemsList()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -37,42 +40,60 @@ class _HomeState extends State<Home> {
       );
     }
 
-    return StreamProvider<List<Reward>>.value(
-      value: DatabaseService(uid: uid).userRewardsStream,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Sky Miles'),
-          actions: [
-            FlatButton.icon(
-              icon: Icon(Icons.logout, color: Colors.white),
-              label: Text('Logout', style: TextStyle(color: Colors.white),),
-              onPressed: () async {
-                await _auth.signOut();
-              },
-            ),
-          ],
+    return StreamProvider<List<Redeem>>.value(
+      value: DatabaseService(uid: uid).userRedeemedStream,
+      child: StreamProvider<List<Reward>>.value(
+        value: DatabaseService(uid: uid).userRewardsStream,
+        child: Scaffold(
+
+
+          appBar: AppBar(
+            title: Text('Sky Miles'),
+            actions: [
+              FlatButton.icon(
+                icon: Icon(Icons.logout, color: Colors.white),
+                label: Text('Logout', style: TextStyle(color: Colors.white),),
+                onPressed: () async {
+                  await _auth.signOut();
+                },
+              ),
+            ],
+          ),
+
+
+          body: tabs[_currentIndex],
+
+
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            // label: Text('New Reward'), 
+            onPressed: () => _showAddRewardPanel(),
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
+
+          bottomNavigationBar: BottomNavigationBar(
+            // type: BottomNavigationBarType.shifting,
+            currentIndex: _currentIndex,
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.account_balance_wallet_rounded),
+                label: 'Rewards',
+                backgroundColor: Colors.blue,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.redeem_rounded),
+                label: 'Redeemed',
+                // backgroundColor: Colors.orange,
+              ),
+            ],
+            onTap: (index) {
+              setState(() { _currentIndex = index; });
+              print(index);
+            },
+          ),
+
         ),
-        body: RewardsList(),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          // label: Text('New Reward'), 
-          onPressed: () => _showAddRewardPanel(),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_balance_wallet_rounded),
-              label: 'Rewards',
-              backgroundColor: Colors.blue,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.redeem_rounded),
-              label: 'Redeemed',
-              backgroundColor: Colors.blue,
-            ),
-          ],
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
   }

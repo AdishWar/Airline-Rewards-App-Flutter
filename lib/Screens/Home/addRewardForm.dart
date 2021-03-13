@@ -47,6 +47,7 @@ class _AddRewardFormState extends State<AddRewardForm> {
             onPressed: () async {
               if (_formKey.currentState.validate()) {
                 await DatabaseService(uid: uid).addNewReward(_pnr, _rewards);
+                Navigator.pop(context);
               }
             },
             color: Colors.blue[600],
