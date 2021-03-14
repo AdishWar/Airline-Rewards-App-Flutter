@@ -4,11 +4,12 @@ import 'package:provider/provider.dart';
 import 'package:sky_miles/Models/redeem.dart';
 import 'package:sky_miles/Services/auth.dart';
 import 'package:sky_miles/Services/database.dart';
-import 'rewards_list.dart';
 import 'package:sky_miles/Models/MyUser.dart';
 import '../../Models/reward.dart';
 import 'addRewardForm.dart';
-import 'redeems_list.dart';
+import 'sliver_rewards_list.dart';
+import 'sliver_redeems_list.dart';
+import 'flexible_space.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -19,9 +20,10 @@ class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
 
   int _currentIndex = 0;
-  final tabs = [
-    RewardsList(),
-    RedeemsList()
+
+  final sliverTabs = [
+    SliverRewardsList(),
+    SliverRedeemsList(),
   ];
 
   @override
@@ -46,22 +48,31 @@ class _HomeState extends State<Home> {
         value: DatabaseService(uid: uid).userRewardsStream,
         child: Scaffold(
 
-
-          appBar: AppBar(
-            title: Text('Sky Miles'),
-            actions: [
-              FlatButton.icon(
-                icon: Icon(Icons.logout, color: Colors.white),
-                label: Text('Logout', style: TextStyle(color: Colors.white),),
-                onPressed: () async {
-                  await _auth.signOut();
-                },
+          body: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                title: Text('Sky Miles'),
+                actions: [
+                  FlatButton.icon(
+                    icon: Icon(Icons.logout, color: Colors.white),
+                    label: Text('Logout', style: TextStyle(color: Colors.white),),
+                    onPressed: () async {
+                      await _auth.signOut();
+                    },
+                  ),
+                ],
+                pinned: true,
+                expandedHeight: 200,
+                flexibleSpace: FlexibleSpaceBar(
+                  // background: Text('Helllloooooooo'),
+                  background: FlexibleSpace(points: 100,),
+                ),
               ),
+              
+              sliverTabs[_currentIndex],
             ],
+            
           ),
-
-
-          body: tabs[_currentIndex],
 
 
           floatingActionButton: FloatingActionButton(
